@@ -1,9 +1,9 @@
 const CONFIG = {
   // profile setting (required)
   profile: {
-    name: "몽몽",
-    image: "/avatar.svg", // If you want to create your own notion avatar, check out https://notion-avatar.vercel.app
-    role: "",
+    name: "몽이",
+    image: "/mongi.png", // If you want to create your own notion avatar, check out https://notion-avatar.vercel.app
+    role: "몽이는 나모의 마스코트랍니다",
     bio: "나의 모임 기록 어플, 나모",
     email: "namo.corps.official@gmail.com",
     linkedin: "",
