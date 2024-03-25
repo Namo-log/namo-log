@@ -3,8 +3,8 @@ const CONFIG = {
   profile: {
     name: "몽이",
     image: "/mongi.png", // If you want to create your own notion avatar, check out https://notion-avatar.vercel.app
-    role: "몽이는 나모의 마스코트랍니다",
-    bio: "나의 모임 기록 어플, 나모",
+    role: "mascot of namo",
+    bio: "나모 - 나의 모임 기록 어플",
     email: "namo.corps.official@gmail.com",
     linkedin: "",
     github: "Namo-Mongmong",
@@ -12,8 +12,8 @@ const CONFIG = {
   },
   projects: [
     {
-      name: `namo-log`,
-      href: "https://github.com/Namo-Mongmong/namo-log",
+      name: `namo site`,
+      href: "https://litt.ly/namong",
     },
   ],
   // blog setting (required)
