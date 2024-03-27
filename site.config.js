@@ -4,7 +4,7 @@ const CONFIG = {
     name: "몽이",
     image: "/mongi.png", // If you want to create your own notion avatar, check out https://notion-avatar.vercel.app
     role: "mascot of namo",
-    bio: "나모 - 나의 모임 기록 어플",
+    bio: "나의 모임 기록 어플",
     email: "namo.corps.official@gmail.com",
     linkedin: "",
     github: "Namo-Mongmong",
