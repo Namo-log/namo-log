@@ -19,8 +19,8 @@ const CONFIG = {
   // blog setting (required)
   blog: {
     // 여기에 나모 로고 넣기
-    title: "namo-log",
-    description: "welcome to namo-log!",
+    title: "NAMO Tech Blog",
+    description: "대학생끼리 하는 프로젝트인 나모의 기술 블로그 입니다.",
   },
 
   // CONFIG configration (required)
