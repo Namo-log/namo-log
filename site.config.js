@@ -8,7 +8,7 @@ const CONFIG = {
     email: "namo.corps.official@gmail.com",
     linkedin: "",
     github: "Namo-Mongmong",
-    instagram: "",
+    instagram: "namo___official",
   },
   projects: [
     {
