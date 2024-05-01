@@ -12,6 +12,7 @@ import { TPosts } from "src/types"
 
 // TODO: react query를 사용해서 처음 불러온 뒤로는 해당데이터만 사용하도록 수정
 export const getPosts = async () => {
+  //let id = '4f553c7539f443f48ad127f54fefd2e7'
   let id = CONFIG.notionConfig.pageId as string
   const api = new NotionAPI()
 
