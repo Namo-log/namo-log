@@ -6,6 +6,7 @@ import Category from "src/components/Category"
 import styled from "@emotion/styled"
 import NotionRenderer from "../components/NotionRenderer"
 import usePostQuery from "src/hooks/usePostQuery"
+import InfoCard from "./InfoCard"
 
 type Props = {}
 
@@ -32,6 +33,7 @@ const PostDetail: React.FC<Props> = () => {
         </div>
         {data.type[0] === "Post" && (
           <>
+            <InfoCard data={data} />
             <Footer />
             <CommentBox data={data} />
           </>
