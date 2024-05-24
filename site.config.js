@@ -7,7 +7,7 @@ const CONFIG = {
     bio: "나의 모임 기록 어플",
     email: "namo.corps.official@gmail.com",
     linkedin: "",
-    github: "Namo-Mongmong",
+    github: "Namo-log",
     instagram: "namo___official",
   },
   projects: [
