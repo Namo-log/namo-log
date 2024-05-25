@@ -20,7 +20,9 @@ const CONFIG = {
   blog: {
     // 여기에 나모 로고 넣기
     title: "NAMO Tech Blog",
+    homeTitle: "namo-log",
     description: "대학생끼리 하는 프로젝트인 나모의 기술 블로그 입니다.",
+    homeLogo: "/images/Logo.png"
   },
 
   // CONFIG configration (required)
