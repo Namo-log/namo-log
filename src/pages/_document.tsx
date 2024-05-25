@@ -18,6 +18,21 @@ class MyDocument extends Document {
             title="RSS 2.0"
             href="/feed"
           ></link>
+
+          {/* Open Graph meta tags for social media sharing */}
+          <meta property="og:title" content={CONFIG.blog.title} />
+          <meta property="og:description" content={CONFIG.blog.description} />
+          <meta property="og:image" content="https://namo-log.vercel.app/images/thumbnail.jpg" />
+          <meta property="og:url" content="https://namo-log.vercel.app/" />
+          <meta property="og:type" content="website" />
+
+          {/* Twitter Card meta tags for Twitter sharing */}
+          <meta name="twitter:card" content="summary_large_image" />
+          <meta name="twitter:title" content={CONFIG.blog.title} />
+          <meta name="twitter:description" content={CONFIG.blog.description} />
+          <meta name="twitter:image" content="https://namo-log.vercel.app/images/thumbnail.jpg" />
+          <meta name="twitter:url" content="https://namo-log.vercel.app/" />
+
           {/* google search console */}
           {CONFIG.googleSearchConsole.enable === true && (
             <>
