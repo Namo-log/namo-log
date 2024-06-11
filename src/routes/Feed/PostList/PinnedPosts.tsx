@@ -11,7 +11,7 @@ type Props = {
 
 const PinnedPosts: React.FC<Props> = ({ q }) => {
   const data = usePostsQuery()
-  console.log("Fetched data:", data) // 데이터 로깅
+  //console.log("Fetched data:", data) // 데이터 로깅
 
   const filteredPosts = useMemo(() => {
     const baseFiltered = filterPosts({
@@ -20,10 +20,10 @@ const PinnedPosts: React.FC<Props> = ({ q }) => {
       category: DEFAULT_CATEGORY,
       order: "desc",
     })
-    console.log("Filtered posts (base):", baseFiltered) // 필터링된 데이터 로깅
+    //console.log("Filtered posts (base):", baseFiltered) // 필터링된 데이터 로깅
 
     const pinnedPosts = baseFiltered.filter((post) => post.tags?.includes("Pinned"))
-    console.log("Pinned posts:", pinnedPosts) // 고정된 포스트 로깅
+    //console.log("Pinned posts:", pinnedPosts) // 고정된 포스트 로깅
 
     return pinnedPosts
   }, [data, q])
