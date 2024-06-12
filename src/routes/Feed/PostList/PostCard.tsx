@@ -1,21 +1,22 @@
-import Link from "next/link"
-import { CONFIG } from "site.config"
-import { formatDate } from "src/libs/utils"
-import Tag from "../../../components/Tag"
-import { TPost } from "../../../types"
-import Image from "next/image"
-import Category from "../../../components/Category"
-import styled from "@emotion/styled"
+import Link from "next/link";
+import { CONFIG } from "site.config";
+import { formatDate } from "src/libs/utils";
+import Tag from "../../../components/Tag";
+import { TPost } from "../../../types";
+import Image from "next/image";
+import Category from "../../../components/Category";
+import styled from "@emotion/styled";
 
 type Props = {
-  data: TPost
-}
+  data: TPost;
+};
 
 const PostCard: React.FC<Props> = ({ data }) => {
-  const category = (data.category && data.category?.[0]) || undefined
+  const category = (data.category && data.category?.[0]) || undefined;
+  const isPinned = data.tags?.includes("Pinned") || false; // Pinned 태그가 있는지 확인
 
   return (
-    <StyledWrapper href={`/${data.slug}`}>
+    <StyledWrapper href={`/${data.slug}`} isPinned={isPinned}>
       <article>
         {category && (
           <div className="category">
@@ -23,11 +24,12 @@ const PostCard: React.FC<Props> = ({ data }) => {
           </div>
         )}
         {data.thumbnail && (
-          <div className="thumbnail">
+          <div className={`thumbnail ${isPinned ? "pinned-thumbnail" : ""}`}>
             <Image
               src={data.thumbnail}
               fill
               alt={data.title}
+              className="thumbnail-image"
               css={{ objectFit: "cover" }}
             />
           </div>
@@ -44,9 +46,11 @@ const PostCard: React.FC<Props> = ({ data }) => {
               )}
             </div>
           </div>
-          <div className="summary">
-            <p>{data.summary}</p>
-          </div>
+          {!isPinned && ( // Pinned 항목이 아닐 때만 summary를 렌더링
+            <div className="summary">
+              <p>{data.summary}</p>
+            </div>
+          )}
           <div className="tags">
             {data.tags &&
               data.tags.map((tag: string, idx: number) => (
@@ -56,12 +60,12 @@ const PostCard: React.FC<Props> = ({ data }) => {
         </div>
       </article>
     </StyledWrapper>
-  )
-}
+  );
+};
 
-export default PostCard
+export default PostCard;
 
-const StyledWrapper = styled(Link)`
+const StyledWrapper = styled(Link)<{ isPinned?: boolean }>`
   article {
     overflow: hidden;
     position: relative;
@@ -96,6 +100,25 @@ const StyledWrapper = styled(Link)`
 
       @media (min-width: 1024px) {
         padding-bottom: 50%;
+      }
+
+      &.pinned-thumbnail {
+        width: 40%;
+        height: auto;
+        order: 2;
+        background-color: transparent;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 1rem;
+        img {
+          width: 100% !important;
+          height: auto !important;
+          max-width: 100%; /* Ensure the image does not exceed its container */
+          max-height: 100%; /* Ensure the image does not exceed its container */
+          position: relative !important;
+          border-radius: 10px;
+        }
       }
     }
     > .content {
@@ -161,5 +184,52 @@ const StyledWrapper = styled(Link)`
         gap: 0.5rem;
       }
     }
+
+    ${({ isPinned, theme }) =>
+      isPinned &&
+      `
+      display: flex;
+      flex-direction: row;
+      background-color: ${theme.scheme === "light" ? "#fff" : "#282828"};
+      height: 16vh;
+      > .thumbnail {
+        width: 30%;
+        height: auto;
+        order: 2;
+        margin: auto; /* Center the image horizontally and vertically */
+        background-color: transparent;
+        display: flex;
+        align-items: center;  /* 수직 가운데 정렬 */
+        justify-content: center;  /* 수평 가운데 정렬 */
+      }
+
+      > .category { 
+        display: none; 
+      }
+      > .thumbnail .thumbnail-image {
+        width: 100%;
+        height: auto;
+      }
+
+      > .content {
+        width: 70%;
+        padding: 1rem;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        order: 1;
+
+        > .summary { 
+          display: none; 
+        }
+      }
+
+      &[data-thumb="false"] > .content {
+        padding-top: 1rem;
+      }
+      &[data-category="false"] > .content {
+        padding-top: 1rem;
+      }
+    `}
   }
-`
+`;
