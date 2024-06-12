@@ -103,19 +103,19 @@ const StyledWrapper = styled(Link)<{ isPinned?: boolean }>`
       }
 
       &.pinned-thumbnail {
-        width: 30%;
+        width: 40%;
         height: auto;
         order: 2;
-        margin-left: auto;
         background-color: transparent;
         display: flex;
-        align-items: center;  /* 수직 가운데 정렬 */
-        justify-content: center;  /* 수평 가운데 정렬 */
-        margin-top: 12%;
-        
+        align-items: center;
+        justify-content: center;
+        padding: 1rem;
         img {
           width: 100% !important;
           height: auto !important;
+          max-width: 100%; /* Ensure the image does not exceed its container */
+          max-height: 100%; /* Ensure the image does not exceed its container */
           position: relative !important;
           border-radius: 10px;
         }
@@ -191,18 +191,16 @@ const StyledWrapper = styled(Link)<{ isPinned?: boolean }>`
       display: flex;
       flex-direction: row;
       background-color: ${theme.scheme === "light" ? "#fff" : "#282828"};
-      height: 22vh;
+      height: 16vh;
       > .thumbnail {
         width: 30%;
         height: auto;
         order: 2;
-        margin-left: auto;
-        margin: 1rem;
+        margin: auto; /* Center the image horizontally and vertically */
         background-color: transparent;
         display: flex;
         align-items: center;  /* 수직 가운데 정렬 */
         justify-content: center;  /* 수평 가운데 정렬 */
-        vertical-align: middle;
       }
 
       > .category { 
