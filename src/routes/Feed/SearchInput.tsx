@@ -1,12 +1,16 @@
 import styled from "@emotion/styled"
 import React, { InputHTMLAttributes, ReactNode } from "react"
 import { Emoji } from "src/components/Emoji"
+import PinnedPosts from "./PostList/PinnedPosts"
+import { useState } from "react"
 
-interface Props extends InputHTMLAttributes<HTMLInputElement> {}
+interface Props extends InputHTMLAttributes<HTMLInputElement> { }
 
 const SearchInput: React.FC<Props> = ({ ...props }) => {
+  const [q, setQ] = useState("")
   return (
     <StyledWrapper>
+      <PinnedPosts q={q} />
       <div className="top">
         <Emoji>🔎</Emoji> Search
       </div>
