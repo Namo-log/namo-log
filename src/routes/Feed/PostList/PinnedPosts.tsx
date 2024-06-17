@@ -11,7 +11,6 @@ type Props = {
 
 const PinnedPosts: React.FC<Props> = ({ q }) => {
   const data = usePostsQuery()
-  //console.log("Fetched data:", data) // 데이터 로깅
 
   const filteredPosts = useMemo(() => {
     const baseFiltered = filterPosts({
@@ -20,15 +19,10 @@ const PinnedPosts: React.FC<Props> = ({ q }) => {
       category: DEFAULT_CATEGORY,
       order: "desc",
     })
-    //console.log("Filtered posts (base):", baseFiltered) // 필터링된 데이터 로깅
-
-    const pinnedPosts = baseFiltered.filter((post) => post.tags?.includes("Pinned"))
-    //console.log("Pinned posts:", pinnedPosts) // 고정된 포스트 로깅
-
-    return pinnedPosts
+    return baseFiltered.filter((post) => post.tags?.includes("Pinned"))
   }, [data, q])
 
-  if (filteredPosts.length === 0) return <div>고정된 포스트가 없습니다</div> // 없을 때 메시지
+  if (filteredPosts.length === 0) return null
 
   return (
     <StyledWrapper>
@@ -37,7 +31,7 @@ const PinnedPosts: React.FC<Props> = ({ q }) => {
       </div>
       <div className="my-2">
         {filteredPosts.map((post) => (
-          <PostCard key={post.slug} data={post} />
+          <PostCard key={post.slug} data={post} showMedia={false} />
         ))}
       </div>
     </StyledWrapper>
