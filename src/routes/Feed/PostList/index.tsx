@@ -1,39 +1,40 @@
-import PostCard from "src/routes/Feed/PostList/PostCard"
-import React, { useEffect, useState } from "react"
-import usePostsQuery from "src/hooks/usePostsQuery"
-import { useRouter } from "next/router"
-import { filterPosts } from "./filterPosts"
-import { DEFAULT_CATEGORY } from "src/constants"
+import PostCard from "src/routes/Feed/PostList/PostCard";
+import React, { useEffect, useState, useMemo } from "react";
+import usePostsQuery from "src/hooks/usePostsQuery";
+import { useRouter } from "next/router";
+import { filterPosts } from "./filterPosts";
+import { DEFAULT_CATEGORY } from "src/constants";
 
 type Props = {
-  q: string
-}
+  q: string;
+};
 
 const PostList: React.FC<Props> = ({ q }) => {
-  const router = useRouter()
-  const data = usePostsQuery()
+  const router = useRouter();
+  const data = usePostsQuery();
 
-  const [filteredPosts, setFilteredPosts] = useState(data)
+  const [filteredPosts, setFilteredPosts] = useState(data);
 
-  const currentTag = `${router.query.tag || ``}` || undefined
-  const currentCategory = `${router.query.category || ``}` || DEFAULT_CATEGORY
-  const currentOrder = `${router.query.order || ``}` || "desc"
+  const currentTag = `${router.query.tag || ``}` || undefined;
+  const currentCategory = `${router.query.category || ``}` || DEFAULT_CATEGORY;
+  const currentOrder = `${router.query.order || ``}` || "desc";
+  const currentAuthor = `${router.query.author || ``}` || undefined;
 
   useEffect(() => {
     setFilteredPosts(() => {
-      let newFilteredPosts = data
+      let newFilteredPosts = data;
       // keyword
       newFilteredPosts = newFilteredPosts.filter((post) => {
-        const tagContent = post.tags ? post.tags.join(" ") : ""
-        const searchContent = post.title + post.summary + tagContent
-        return searchContent.toLowerCase().includes(q.toLowerCase())
-      })
+        const tagContent = post.tags ? post.tags.join(" ") : "";
+        const searchContent = post.title + post.summary + tagContent;
+        return searchContent.toLowerCase().includes(q.toLowerCase());
+      });
 
       // tag
       if (currentTag) {
         newFilteredPosts = newFilteredPosts.filter(
           (post) => post && post.tags && post.tags.includes(currentTag)
-        )
+        );
       }
 
       // category
@@ -41,16 +42,26 @@ const PostList: React.FC<Props> = ({ q }) => {
         newFilteredPosts = newFilteredPosts.filter(
           (post) =>
             post && post.category && post.category.includes(currentCategory)
-        )
-      }
-      // order
-      if (currentOrder !== "desc") {
-        newFilteredPosts = newFilteredPosts.reverse()
+        );
       }
 
-      return newFilteredPosts
-    })
-  }, [q, currentTag, currentCategory, currentOrder, setFilteredPosts, data])
+      // author
+      if (currentAuthor) {
+        newFilteredPosts = newFilteredPosts.filter(
+          (post) =>
+            post.author &&
+            post.author.some((author) => author.name === currentAuthor)
+        );
+      }
+
+      // order
+      if (currentOrder !== "desc") {
+        newFilteredPosts = newFilteredPosts.reverse();
+      }
+
+      return newFilteredPosts;
+    });
+  }, [q, currentTag, currentCategory, currentOrder, currentAuthor, setFilteredPosts, data]);
 
   return (
     <>
@@ -63,7 +74,7 @@ const PostList: React.FC<Props> = ({ q }) => {
         ))}
       </div>
     </>
-  )
-}
+  );
+};
 
-export default PostList
+export default PostList;
