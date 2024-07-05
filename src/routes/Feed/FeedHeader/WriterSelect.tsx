@@ -34,7 +34,7 @@ const AuthorSelect: React.FC<Props> = () => {
     return Array.from(authorMap.entries()).map(([name, info]) => ({ name, ...info }));
   }, [data]);
 
-  const totalPosts = data.length;
+  const totalAuthors = authors.length;
 
   const handleOptionClick = (author: string) => {
     if (author === "All Authors") {
@@ -86,7 +86,7 @@ const AuthorSelect: React.FC<Props> = () => {
             className="selected-author-photo"
           />
         )}
-        {`${router.query.author || 'All Authors'} (${router.query.author ? data.filter(post => post.author && post.author.some(a => a.name === router.query.author)).length : totalPosts})`} <MdExpandMore />
+        {`${router.query.author || 'All Authors'} (${router.query.author ? data.filter(post => post.author && post.author.some(a => a.name === router.query.author)).length : totalAuthors})`} <MdExpandMore />
       </div>
       {opened && (
         <div className="content">
@@ -101,7 +101,7 @@ const AuthorSelect: React.FC<Props> = () => {
               alt="All Authors"
               className="author-photo"
             />
-            {`All Authors (${totalPosts})`}
+            {`All Authors (${totalAuthors})`}
           </div>
           {authors.map((author, idx) => (
             <div
@@ -137,7 +137,7 @@ const StyledWrapper = styled.div`
     margin-top: 0.5rem;
     margin-bottom: 0.5rem;
     gap: 0.25rem;
-    font-size: 1rem;
+    font-size: 16px;
     line-height: 1.75rem;
     font-weight: 700;
     cursor: pointer;
