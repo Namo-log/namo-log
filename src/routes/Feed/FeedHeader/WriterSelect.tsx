@@ -7,30 +7,39 @@ import usePostsQuery from "src/hooks/usePostsQuery";
 import Image from "next/image";
 import allPeople from "src/assets/image/allPeople.png";
 
-type Props = {};
+type Props = {
+  onAuthorSelect: (author: string, photo: string | null) => void;
+};
 
-const AuthorSelect: React.FC<Props> = () => {
+const AuthorSelect: React.FC<Props> = ({ onAuthorSelect }) => {
   const router = useRouter();
   const data = usePostsQuery();
   const [dropdownRef, opened, handleOpen] = useDropdown();
-
   const [selectedAuthorPhoto, setSelectedAuthorPhoto] = useState<string | null>(null);
 
-  // 작성자 정보 필터링
+  // Prepare authors data with post counts
   const authors = useMemo(() => {
-    const authorMap = new Map<string, { count: number, profile_photo?: string }>();
+    const authorMap = new Map<string, { count: number; profile_photo?: string }>();
+
     data.forEach(post => {
       if (post.author) {
         post.author.forEach(author => {
           if (authorMap.has(author.name)) {
             const existing = authorMap.get(author.name)!;
-            authorMap.set(author.name, { count: existing.count + 1, profile_photo: author.profile_photo });
+            authorMap.set(author.name, {
+              count: existing.count + 1,
+              profile_photo: author.profile_photo
+            });
           } else {
-            authorMap.set(author.name, { count: 1, profile_photo: author.profile_photo });
+            authorMap.set(author.name, {
+              count: 1,
+              profile_photo: author.profile_photo
+            });
           }
         });
       }
     });
+
     return Array.from(authorMap.entries()).map(([name, info]) => ({ name, ...info }));
   }, [data]);
 
@@ -41,10 +50,11 @@ const AuthorSelect: React.FC<Props> = () => {
       router.push({
         query: {
           ...router.query,
-          author: undefined, // 모든 글을 보기 위해 author 쿼리 파라미터를 삭제
+          author: undefined,
         },
       });
       setSelectedAuthorPhoto(null);
+      onAuthorSelect(author, null);
     } else {
       router.push({
         query: {
@@ -54,6 +64,7 @@ const AuthorSelect: React.FC<Props> = () => {
       });
       const selectedAuthor = authors.find(a => a.name === author);
       setSelectedAuthorPhoto(selectedAuthor?.profile_photo || null);
+      onAuthorSelect(author, selectedAuthor?.profile_photo || null);
     }
   };
 
@@ -90,10 +101,7 @@ const AuthorSelect: React.FC<Props> = () => {
       </div>
       {opened && (
         <div className="content">
-          <div
-            className="item"
-            onClick={() => handleOptionClick("All Authors")}
-          >
+          <div className="item" onClick={() => handleOptionClick("All Authors")}>
             <Image
               src={allPeople}
               width={20}
@@ -141,7 +149,7 @@ const StyledWrapper = styled.div`
     line-height: 1.75rem;
     font-weight: 700;
     cursor: pointer;
-    
+
     .selected-author-photo {
       border-radius: 50%;
     }
